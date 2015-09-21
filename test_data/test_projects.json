@@ -1,0 +1,435 @@
+{
+  "class": [
+    "projects",
+    "Collection"
+  ],
+  "properties": {
+    "title": "Projects",
+    "limit": 10,
+    "total": 205,
+    "offset": 0,
+    "size": 10
+  },
+  "entities": [
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "5e1fa645-d079-4b61-8514-1bee8732e3b7",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "c1378a5d-ff17-4002-b903-451f48f4d724"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/c1378a5d-ff17-4002-b903-451f48f4d724"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/c1378a5d-ff17-4002-b903-451f48f4d724/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "cc767be6-3183-4294-a37a-e0d33ef2c755",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "72106daf-69f9-4366-8ad8-2c52af9ca3ee"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/72106daf-69f9-4366-8ad8-2c52af9ca3ee"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/72106daf-69f9-4366-8ad8-2c52af9ca3ee/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "a234e5ac-81bd-4f08-9088-bcf7f9c7c02e",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "0e226525-a2ae-4914-89c2-a7e10d882797"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/0e226525-a2ae-4914-89c2-a7e10d882797"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/0e226525-a2ae-4914-89c2-a7e10d882797/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "b1030794-802f-4513-afb5-049c266a8c30",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "197e0cc7-6688-4ae1-8bbd-248790b10b79"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/197e0cc7-6688-4ae1-8bbd-248790b10b79"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/197e0cc7-6688-4ae1-8bbd-248790b10b79/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "bde8d4ac-44ed-41cb-9676-422ac4c2d9fa",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "56ed8c7a-dcfe-42c3-90fd-8aed3a7f9c92"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/56ed8c7a-dcfe-42c3-90fd-8aed3a7f9c92"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/56ed8c7a-dcfe-42c3-90fd-8aed3a7f9c92/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "1dc97d79-f7af-475b-9aa5-da83bf302630",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "1fd6ca8e-4e8d-452d-8d75-74ab9aa0fae3"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/1fd6ca8e-4e8d-452d-8d75-74ab9aa0fae3"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/1fd6ca8e-4e8d-452d-8d75-74ab9aa0fae3/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1393545600000,
+        "workflow_id": "532aa753-33f4-4bb7-9a5a-999f7cff8bf6",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "devzone.lingotek.com",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "ea0c1721-056a-40c5-b354-72665c9aa319"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/ea0c1721-056a-40c5-b354-72665c9aa319"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/ea0c1721-056a-40c5-b354-72665c9aa319/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "c604a8e6-72a4-4467-914e-4dfc9d5bdae6",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "3fcd2a93-857b-487d-bf73-5ac9f105db86"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/3fcd2a93-857b-487d-bf73-5ac9f105db86"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/3fcd2a93-857b-487d-bf73-5ac9f105db86/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "d6450ba0-159f-439b-a004-12829380289a",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "7f0dc9e1-f886-4df8-b59e-1697e0e5321e"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/7f0dc9e1-f886-4df8-b59e-1697e0e5321e"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/7f0dc9e1-f886-4df8-b59e-1697e0e5321e/status"
+        }
+      ]
+    },
+    {
+      "class": [
+        "project"
+      ],
+      "rel": [
+        "project"
+      ],
+      "properties": {
+        "creation_date": 1433116800000,
+        "workflow_id": "b884254a-7987-4b39-b685-cf30ea2b69e9",
+        "due_date": 0,
+        "callback_url": null,
+        "title": "jobName",
+        "community_id": "f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8",
+        "id": "a4484a37-325f-4351-986e-cd11671bfeae"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/project/a4484a37-325f-4351-986e-cd11671bfeae"
+        },
+        {
+          "rel": [
+            "community",
+            "parent"
+          ],
+          "href": "/community/f49c4fca-ff93-4f01-a03e-aa36ddb1f2b8"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "/project/a4484a37-325f-4351-986e-cd11671bfeae/status"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "name": "add",
+      "method": "POST",
+      "href": "project",
+      "title": "Add Project to Community",
+      "type": "application/x-www-form-urlencoded",
+      "fields": [
+        {
+          "name": "title",
+          "type": "TEXT",
+          "required": true
+        },
+        {
+          "name": "community_id",
+          "type": "TEXT",
+          "required": true
+        },
+        {
+          "name": "workflow_id",
+          "type": "RADIO",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "/project?offset=0&limit=10"
+    },
+    {
+      "rel": [
+        "next"
+      ],
+      "href": "/project?offset=10&limit=10"
+    }
+  ]
+}

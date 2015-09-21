@@ -1,0 +1,76 @@
+{
+  "class": [
+    "document"
+  ],
+  "properties": {
+    "project_id": "72106daf-69f9-4366-8ad8-2c52af9ca3ee",
+    "upload_date": 1442361600000,
+    "title": "My Test",
+    "external_url": null,
+    "name": "la",
+    "id": "59d28ae8-25bd-4f99-85fc-9fd4fbc2af87",
+    "extension": "none"
+  },
+  "entities": [
+    {
+      "class": [
+        "locale",
+        "es"
+      ],
+      "rel": [
+        "locale"
+      ],
+      "properties": {
+        "code": "es-ES",
+        "language_code": "es",
+        "country_code": "ES",
+        "title": "Spanish, Spain",
+        "language": "Spanish",
+        "country": "Spain"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/locale/es-ES"
+        }
+      ]
+    },
+    {
+      "class": [
+        "status"
+      ],
+      "rel": [
+        "status"
+      ],
+      "properties": {
+        "title": "Status of My Test",
+        "count": {
+          "segment": {
+            "total": 1,
+            "unique": 1
+          },
+          "word": {
+            "total": 5,
+            "unique": 5
+          },
+          "format_tag": {
+            "total": 0
+          },
+          "character": 21
+        },
+        "progress": 0,
+        "id": "59d28ae8-25bd-4f99-85fc-9fd4fbc2af87"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/document/59d28ae8-25bd-4f99-85fc-9fd4fbc2af87/status"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,404 @@
+{
+  "class": [
+    "communities",
+    "Collection"
+  ],
+  "properties": {
+    "limit": 10,
+    "offset": 0,
+    "total": 93,
+    "size": 10
+  },
+  "entities": [
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "1",
+        "id": "2a895174-6e7d-48c4-b34c-3d72bd0f3987"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/2a895174-6e7d-48c4-b34c-3d72bd0f3987",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/2a895174-6e7d-48c4-b34c-3d72bd0f3987"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "1",
+        "id": "cc254c0f-3673-48ad-8648-10355399b1de"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/cc254c0f-3673-48ad-8648-10355399b1de",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/cc254c0f-3673-48ad-8648-10355399b1de"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "2",
+        "id": "25e1d7ad-40be-45b8-83b0-90d62447b865"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/25e1d7ad-40be-45b8-83b0-90d62447b865",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/25e1d7ad-40be-45b8-83b0-90d62447b865"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "a",
+        "id": "199a6cd0-e0be-4aa4-add0-23496a670c48"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/199a6cd0-e0be-4aa4-add0-23496a670c48",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/199a6cd0-e0be-4aa4-add0-23496a670c48"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "abc",
+        "id": "131914c4-49d9-4814-b5f8-c21a4f360425"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/131914c4-49d9-4814-b5f8-c21a4f360425",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/131914c4-49d9-4814-b5f8-c21a4f360425"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "abc-test",
+        "id": "cc815dc0-fa66-4999-b459-6b551328531c"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/cc815dc0-fa66-4999-b459-6b551328531c",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/cc815dc0-fa66-4999-b459-6b551328531c"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "asdf",
+        "id": "b03b8248-cc70-4db0-a230-13e8e22f5413"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/b03b8248-cc70-4db0-a230-13e8e22f5413",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/b03b8248-cc70-4db0-a230-13e8e22f5413"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "Blah blah community",
+        "id": "2f996e2b-eef6-4db1-b18a-1f5a3190ba73"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/2f996e2b-eef6-4db1-b18a-1f5a3190ba73",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/2f996e2b-eef6-4db1-b18a-1f5a3190ba73"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "bob",
+        "id": "ca4a5e20-26f6-448d-88c5-da6906536268"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/ca4a5e20-26f6-448d-88c5-da6906536268",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/ca4a5e20-26f6-448d-88c5-da6906536268"
+        }
+      ]
+    },
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "COMM-Unity",
+        "id": "9d062ee7-19b4-4ab8-9145-e4a5f59ebb54"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/9d062ee7-19b4-4ab8-9145-e4a5f59ebb54",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/9d062ee7-19b4-4ab8-9145-e4a5f59ebb54"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "name": "add",
+      "method": "POST",
+      "href": "community",
+      "title": "Add Community",
+      "type": "application/x-www-form-urlencoded",
+      "fields": [
+        {
+          "name": "title",
+          "type": "TEXT",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "community?offset=0&limit=10"
+    },
+    {
+      "rel": [
+        "next"
+      ],
+      "href": "community?offset=10&limit=10"
+    }
+  ]
+}

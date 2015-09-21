@@ -1,0 +1,18 @@
+{
+  "class": [
+    "status"
+  ],
+  "properties": {
+    "title": "Status of My Test",
+    "progress": 0,
+    "id": "59d28ae8-25bd-4f99-85fc-9fd4fbc2af87"
+  },
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "/document/59d28ae8-25bd-4f99-85fc-9fd4fbc2af87/status"
+    }
+  ]
+}
