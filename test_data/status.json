@@ -5,7 +5,21 @@
   "properties": {
     "title": "Status of My Test",
     "progress": 0,
-    "id": "59d28ae8-25bd-4f99-85fc-9fd4fbc2af87"
+    "id": "59d28ae8-25bd-4f99-85fc-9fd4fbc2af87",
+    "count": {
+      "segment": {
+        "total": 35,
+        "unique": 35
+      },
+      "word": {
+        "total": 991,
+        "unique": 991
+      },
+      "format_tag": {
+        "total": 2
+      },
+      "character": 5842
+    }
   },
   "links": [
     {

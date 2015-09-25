@@ -31,6 +31,7 @@ type Response struct {
 	Class      []string         `json:"class"`
 	Properties ResponseProperty `json:"properties"`
 	Entities   json.RawMessage  `json:"entities"`
+	Links      []Link           `json:"links"`
 }
 
 type ResponseProperty struct {
@@ -79,10 +80,22 @@ type Project struct {
 	Links    []Link          `json:"links"`
 }
 
+type StatusCountPart struct {
+	Total  int `json:"total"`
+	Unique int `json:"unique"`
+}
+
+type StatusCount struct {
+	Segment   StatusCountPart `json:"segment"`
+	Word      StatusCountPart `json:"word"`
+	FormatTag StatusCountPart `json:"format_tag"`
+}
+
 type StatusProperty struct {
-	Title    string `json:"title"`
-	Id       string `json:"id"`
-	Progress int32  `json:"progress"`
+	Title    string      `json:"title"`
+	Id       string      `json:"id"`
+	Progress int32       `json:"progress"`
+	Count    StatusCount `json:"count"`
 }
 
 type Status struct {
@@ -166,7 +179,7 @@ func (d *Document) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	err = json.Unmarshal(entities[0], &d.Status)
+	err = json.Unmarshal(entities[1], &d.Status)
 
 	return err
 }
