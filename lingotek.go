@@ -17,45 +17,27 @@ func NewApi(accessToken string, client *http.Client) *Lingotek {
 	return &api
 }
 
-func (l *Lingotek) GetProjects(communityId string) ([]Project, error) {
-	v := url.Values{}
-	v.Set("community_id", communityId)
+func (l *Lingotek) createDummyResponse(path string, params *url.Values) *Response {
+	initialResponse := Response{}
 
-	var projects []Project
+	if params == nil {
+		params = &url.Values{}
+	}
 
-	err := l.getEntityCollection("project", &v, &projects)
-	return projects, err
-}
+	params.Set("limit", "10")
+	params.Set("offset", "0")
 
-func (l *Lingotek) GetCommunity(communityId string) (*Community, error) {
-	var community Community
+	selfLink := Link{
+		Rel:  []string{"self"},
+		Href: path + "?" + params.Encode(),
+	}
+	nextLink := Link{
+		Rel:  []string{"next"},
+		Href: path + "?" + params.Encode(),
+	}
 
-	err := l.getEntity("community/"+communityId, nil, &community)
-	return &community, err
-}
+	initialResponse.Links = append(initialResponse.Links, selfLink)
+	initialResponse.Links = append(initialResponse.Links, nextLink)
 
-func (l *Lingotek) GetCommunities() ([]Community, error) {
-	var communities []Community
-
-	err := l.getEntityCollection("community", nil, &communities)
-	return communities, err
-}
-
-func (l *Lingotek) TranslateString(title, content, localeCode string, project Project) (*Status, error) {
-	var status Status
-	v := url.Values{}
-	v.Set("title", title)
-	v.Set("content", content)
-	v.Set("locale_code", localeCode)
-	v.Set("project_id", project.Property.Id)
-
-	err := l.postEntity("document", &v, &status)
-	return &status, err
-}
-
-func (l *Lingotek) CheckStatus(doc Document) (*Document, error) {
-	var document Document
-
-	err := l.getEntity("document/"+doc.Property.Id, nil, &document)
-	return &document, err
+	return &initialResponse
 }
