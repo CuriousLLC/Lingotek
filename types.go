@@ -183,3 +183,57 @@ func (d *Document) UnmarshalJSON(data []byte) error {
 
 	return err
 }
+
+type PhaseProperty struct {
+	Order            int    `json:"order"`
+	PercentCompleted int    `json:"percent_completed"`
+	Name             string `json:"name"`
+}
+
+type Phase struct {
+	Property PhaseProperty `json:"properties"`
+}
+
+type TranslationProperty struct {
+	DueDate         LingoTime `json:"due_date"`
+	PercentComplete int       `json:"percent_complete"`
+	LocaleCode      string    `json:"local_code"`
+}
+
+type Translation struct {
+	Property TranslationProperty
+	Phases   []Phase
+	Locale   Locale
+}
+
+func (t *Translation) UnmarshalJson(data []byte) error {
+	tObj := make(map[string]json.RawMessage)
+	entities := make([]json.RawMessage, 2)
+
+	err := json.Unmarshal(data, &tObj)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(tObj["properties"], &t.Property)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(tObj["entities"], &entities)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(entities[0], &t.Phases)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(entities[1], &t.Locale)
+	if err != nil {
+		return err
+	}
+
+	return err
+}

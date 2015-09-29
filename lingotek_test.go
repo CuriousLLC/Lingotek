@@ -1,6 +1,7 @@
 package lingotek
 
 import (
+	"bytes"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -377,13 +378,22 @@ func TestGetDocuments(t *testing.T) {
 	}
 }
 
-func TestTranslateString(t *testing.T) {
+func TestUploadString(t *testing.T) {
 	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var testData io.Reader
 		var err error
 
 		if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded;charset=utf-8" {
 			t.Error("Expected Content-Type x-www-form-urlencoded, got %s", r.Header.Get("Content-Type"))
+		}
+
+		err = r.ParseForm()
+		if r.Form.Get("locale_code") != "en-US" {
+			t.Errorf("Expected en-US, got %s", r.PostForm.Get("locale_code"))
+		}
+
+		if r.Form.Get("project_id") != "12345" {
+			t.Errorf("Expected 12345, got %s", r.PostForm.Get("project_id"))
 		}
 
 		testData, err = os.Open("test_data/status.json")
@@ -411,7 +421,7 @@ func TestTranslateString(t *testing.T) {
 	prop.Id = "12345"
 	project := Project{}
 	project.Property = prop
-	resp, err := api.TranslateString("My API Test", "Let's go to the shoe store", "es_ES", project)
+	resp, err := api.UploadString("My API Test", "Let's go to the shoe store", "en-US", project)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -422,6 +432,119 @@ func TestTranslateString(t *testing.T) {
 
 	if resp.Property.Id != "59d28ae8-25bd-4f99-85fc-9fd4fbc2af87" {
 		t.Fatal("Expected \"59d28ae8-25bd-4f99-85fc-9fd4fbc2af87\", got %s", resp.Property.Id)
+	}
+}
+
+func TestAddTranslation(t *testing.T) {
+	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var testData io.Reader
+		var err error
+
+		if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded;charset=utf-8" {
+			t.Error("Expected Content-Type x-www-form-urlencoded, got %s", r.Header.Get("Content-Type"))
+		}
+
+		err = r.ParseForm()
+
+		if r.PostForm.Get("locale_code") != "es-ES" {
+			t.Errorf("Expected es-ES, got %s", r.PostForm.Get("locale_code"))
+		}
+
+		testData, err = os.Open("test_data/document_translate_post.json")
+		if err != nil {
+			t.Error("Could not find test data")
+			return
+		}
+
+		io.Copy(w, testData)
+	})
+
+	// Setup our test server
+	ts := httptest.NewServer(testHandler)
+	defer ts.Close()
+
+	testUrl, _ := url.Parse(ts.URL)
+
+	client := &http.Client{
+		Transport: RewriteTransport{
+			URL: testUrl,
+		},
+	}
+
+	api := NewApi("dummyToken", client)
+	prop := DocumentProperty{}
+	document := Document{}
+	document.Property = prop
+
+	translation, err := api.AddTranslation(&document, "es-ES")
+	if err != IdRequired {
+		t.Error("Looking for IdRequired error")
+	}
+
+	prop.Id = "12345"
+	document.Property = prop
+
+	translation, err = api.AddTranslation(&document, "es-ES")
+	if err != nil {
+		t.Error(err)
+	}
+
+	if translation.Property.PercentComplete != 0 {
+		t.Errorf("Expected 0, got %d", translation.Property.PercentComplete)
+	}
+
+}
+
+func TestListTranslations(t *testing.T) {
+	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var testData io.Reader
+		var err error
+
+		offset := r.URL.Query().Get("offset")
+		if offset == "10" {
+			testData, err = os.Open("test_data/document_translate_get_empty.json")
+			if err != nil {
+				t.Error("Could not find test data")
+				return
+			}
+		} else {
+			testData, err = os.Open("test_data/document_translate_get.json")
+			if err != nil {
+				t.Error("Could not find test data")
+				return
+			}
+		}
+
+		io.Copy(w, testData)
+	})
+
+	// Setup our test server
+	ts := httptest.NewServer(testHandler)
+	defer ts.Close()
+
+	testUrl, _ := url.Parse(ts.URL)
+
+	client := &http.Client{
+		Transport: RewriteTransport{
+			URL: testUrl,
+		},
+	}
+	api := NewApi("dummyToken", client)
+	doneChan := make(chan bool)
+	prop := DocumentProperty{}
+	prop.Id = "12345"
+	document := Document{}
+	document.Property = prop
+
+	translationChan, _ := api.ListTranslations(&document, doneChan)
+
+	cNum := 0
+	for _ = range translationChan {
+		cNum += 1
+	}
+
+	if cNum != 4 {
+		t.Errorf("Expected 4 projects, got %d", cNum)
 	}
 }
 
@@ -479,5 +602,44 @@ func TestCheckStatus(t *testing.T) {
 
 	if resp.Status.Property.Count.Word.Total != 5 {
 		t.Errorf("Expected 5, got %d", resp.Status.Property.Count.Word.Total)
+	}
+}
+
+func TestGetTranslatedDocument(t *testing.T) {
+	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "test_data/big_document.bin")
+	})
+
+	// Setup our test server
+	ts := httptest.NewServer(testHandler)
+	defer ts.Close()
+
+	testUrl, _ := url.Parse(ts.URL)
+
+	client := &http.Client{
+		Transport: RewriteTransport{
+			URL: testUrl,
+		},
+	}
+	api := NewApi("dummyToken", client)
+	prop := DocumentProperty{}
+	prop.Id = "12345"
+	document := Document{}
+	document.Property = prop
+
+	var buf bytes.Buffer
+
+	n, err := api.GetTranslatedDocument(&document, "es-ES", &buf)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if len(buf.Bytes()) != 102400 {
+		t.Errorf("Expected len 102400, got %d", len(buf.Bytes()))
+	}
+
+	if n != int64(len(buf.Bytes())) {
+		t.Errorf("Expected len(buf)(%d) to equal n(%d)", len(buf.Bytes()), n)
 	}
 }

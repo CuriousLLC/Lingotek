@@ -1,9 +1,14 @@
 package lingotek
 
 import (
+	"errors"
 	"net/http"
 	"net/url"
 )
+
+var ServerError = errors.New("Server returned an error")
+var EndOfList = errors.New("No next rel found")
+var IdRequired = errors.New("No ID given")
 
 const target = "https://sandbox-api.lingotek.com/api/"
 

@@ -1,15 +1,15 @@
 package lingotek
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
+	//	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 )
-
-var ServerError = errors.New("Server returned an error")
-var EndOfList = errors.New("No next rel found")
 
 // GetNext will return a path and query values pointing towards
 // the next page of an entity.
@@ -131,6 +131,10 @@ func (l *Lingotek) getNextPage(response *Response) (*Response, error) {
 	return &jsonResponse, nil
 }
 
+func (l *Lingotek) downloadContent(route string, params *url.Values, writer io.Writer) (int64, error) {
+	return l.streamRequest(route, "GET", params, writer)
+}
+
 // getEntity converts a single response entity into the specified type
 func (l *Lingotek) getEntity(route string, params *url.Values, entity interface{}) error {
 	resp, err := l.doRequest(route, "GET", params)
@@ -146,7 +150,7 @@ func (l *Lingotek) getEntity(route string, params *url.Values, entity interface{
 	return nil
 }
 
-func (l *Lingotek) doRequest(route, method string, params *url.Values) ([]byte, error) {
+func (l *Lingotek) streamRequest(route, method string, params *url.Values, writer io.Writer) (int64, error) {
 	url := target + route
 	if params != nil {
 		url += "?" + params.Encode()
@@ -154,7 +158,51 @@ func (l *Lingotek) doRequest(route, method string, params *url.Values) ([]byte, 
 
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
-		return nil, err
+		return 0, err
+	}
+
+	req.Header.Add("Authorization", l.AccessToken)
+	if method == "POST" {
+		req.Header.Add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+	}
+	resp, err := l.client.Do(req)
+	if err != nil {
+		return 0, err
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode >= 400 {
+		return 0, errors.New(method + url + ":" + resp.Status)
+	}
+
+	return io.Copy(writer, resp.Body)
+}
+
+func (l *Lingotek) doRequest(route, method string, params *url.Values) ([]byte, error) {
+	var req *http.Request
+	var err error
+
+	url := target + route
+	if params == nil {
+		req, err = http.NewRequest(method, url, nil)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		if method == "GET" {
+			url += "?" + params.Encode()
+			req, err = http.NewRequest(method, url, nil)
+			if err != nil {
+				return nil, err
+			}
+		} else if method == "POST" {
+			//fmt.Println("Using POST with body", params.Encode())
+			req, err = http.NewRequest(method, url, bytes.NewBufferString(params.Encode()))
+			if err != nil {
+				return nil, err
+			}
+		}
 	}
 
 	req.Header.Add("Authorization", l.AccessToken)

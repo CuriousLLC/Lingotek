@@ -1,0 +1,294 @@
+{
+  "class": [
+    "translations",
+    "Collection"
+  ],
+  "properties": {
+    "limit": 1,
+    "offset": 0,
+    "total": 4,
+    "size": 4
+  },
+  "entities": [
+    {
+      "class": [
+        "translation"
+      ],
+      "rel": [
+        "translation"
+      ],
+      "properties": {
+        "due_date": 0,
+        "percent_complete": 100,
+        "locale_code": "en-US"
+      },
+      "entities": [
+        {
+          "class": [
+            "phases",
+            "Collection"
+          ],
+          "rel": [
+            "phases"
+          ],
+          "properties": {
+            "limit": 1,
+            "offset": 0,
+            "total": 1,
+            "size": 1
+          },
+          "entities": [
+            {
+              "class": [
+                "phase"
+              ],
+              "rel": [
+                "phase"
+              ],
+              "properties": {
+                "order": 1,
+                "percent_completed": 100,
+                "name": "Machine Translate"
+              }
+            }
+          ]
+        },
+        {
+          "class": [
+            "locale",
+            "en"
+          ],
+          "rel": [
+            "locale"
+          ],
+          "properties": {
+            "code": "en-US",
+            "language_code": "en",
+            "country_code": "US",
+            "title": "English, United States",
+            "language": "English",
+            "country": "United States"
+          },
+          "links": [
+            {
+              "rel": [
+                "self"
+              ],
+              "href": "/locale/en-US"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class": [
+        "translation"
+      ],
+      "rel": [
+        "translation"
+      ],
+      "properties": {
+        "due_date": 0,
+        "percent_complete": 100,
+        "locale_code": "en-US"
+      },
+      "entities": [
+        {
+          "class": [
+            "phases",
+            "Collection"
+          ],
+          "rel": [
+            "phases"
+          ],
+          "properties": {
+            "limit": 1,
+            "offset": 0,
+            "total": 1,
+            "size": 1
+          },
+          "entities": [
+            {
+              "class": [
+                "phase"
+              ],
+              "rel": [
+                "phase"
+              ],
+              "properties": {
+                "order": 1,
+                "percent_completed": 100,
+                "name": "Machine Translate"
+              }
+            }
+          ]
+        },
+        {
+          "class": [
+            "locale",
+            "en"
+          ],
+          "rel": [
+            "locale"
+          ],
+          "properties": {
+            "code": "en-US",
+            "language_code": "en",
+            "country_code": "US",
+            "title": "English, United States",
+            "language": "English",
+            "country": "United States"
+          },
+          "links": [
+            {
+              "rel": [
+                "self"
+              ],
+              "href": "/locale/en-US"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class": [
+        "translation"
+      ],
+      "rel": [
+        "translation"
+      ],
+      "properties": {
+        "due_date": 0,
+        "percent_complete": 100,
+        "locale_code": "en-US"
+      },
+      "entities": [
+        {
+          "class": [
+            "phases",
+            "Collection"
+          ],
+          "rel": [
+            "phases"
+          ],
+          "properties": {
+            "limit": 1,
+            "offset": 0,
+            "total": 1,
+            "size": 1
+          },
+          "entities": [
+            {
+              "class": [
+                "phase"
+              ],
+              "rel": [
+                "phase"
+              ],
+              "properties": {
+                "order": 1,
+                "percent_completed": 100,
+                "name": "Machine Translate"
+              }
+            }
+          ]
+        },
+        {
+          "class": [
+            "locale",
+            "en"
+          ],
+          "rel": [
+            "locale"
+          ],
+          "properties": {
+            "code": "en-US",
+            "language_code": "en",
+            "country_code": "US",
+            "title": "English, United States",
+            "language": "English",
+            "country": "United States"
+          },
+          "links": [
+            {
+              "rel": [
+                "self"
+              ],
+              "href": "/locale/en-US"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class": [
+        "translation"
+      ],
+      "rel": [
+        "translation"
+      ],
+      "properties": {
+        "due_date": 0,
+        "percent_complete": 100,
+        "locale_code": "en-US"
+      },
+      "entities": [
+        {
+          "class": [
+            "phases",
+            "Collection"
+          ],
+          "rel": [
+            "phases"
+          ],
+          "properties": {
+            "limit": 1,
+            "offset": 0,
+            "total": 1,
+            "size": 1
+          },
+          "entities": [
+            {
+              "class": [
+                "phase"
+              ],
+              "rel": [
+                "phase"
+              ],
+              "properties": {
+                "order": 1,
+                "percent_completed": 100,
+                "name": "Machine Translate"
+              }
+            }
+          ]
+        },
+        {
+          "class": [
+            "locale",
+            "en"
+          ],
+          "rel": [
+            "locale"
+          ],
+          "properties": {
+            "code": "en-US",
+            "language_code": "en",
+            "country_code": "US",
+            "title": "English, United States",
+            "language": "English",
+            "country": "United States"
+          },
+          "links": [
+            {
+              "rel": [
+                "self"
+              ],
+              "href": "/locale/en-US"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

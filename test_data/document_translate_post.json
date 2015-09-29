@@ -1,0 +1,52 @@
+{
+  "class": [
+    "translation"
+  ],
+  "properties": {
+    "due_date": 0,
+    "percent_complete": 100,
+    "locale_code": "es-ES"
+  },
+  "entities": [
+    {
+      "class": [
+        "phases",
+        "Collection"
+      ],
+      "rel": [
+        "phases"
+      ],
+      "properties": {
+        "limit": 0,
+        "offset": 0,
+        "total": 0,
+        "size": 0
+      }
+    },
+    {
+      "class": [
+        "locale",
+        "es"
+      ],
+      "rel": [
+        "locale"
+      ],
+      "properties": {
+        "code": "es-ES",
+        "language_code": "es",
+        "country_code": "ES",
+        "title": "Spanish, Spain",
+        "language": "Spanish",
+        "country": "Spain"
+      },
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/locale/es-ES"
+        }
+      ]
+    }
+  ]
+}
