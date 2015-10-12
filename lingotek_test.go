@@ -35,6 +35,33 @@ func (t RewriteTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return rt.RoundTrip(req)
 }
 
+func createTestServer(requestChan chan *http.Request, getFileName func(*http.Request) string) (*httptest.Server, http.Client) {
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var testData io.Reader
+		var err error
+
+		testData, err = os.Open(getFileName(r))
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+
+		io.Copy(w, testData)
+
+		requestChan <- r
+	})
+
+	server := httptest.NewServer(handler)
+	testUrl, _ := url.Parse(server.URL)
+
+	client := http.Client{
+		Transport: RewriteTransport{
+			URL: testUrl,
+		},
+	}
+
+	return server, client
+}
 func TestResponseGetNext(t *testing.T) {
 	r := Response{}
 
@@ -70,37 +97,15 @@ func TestResponseGetNext(t *testing.T) {
 }
 
 func TestGetNextPage(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var testData io.Reader
-		var err error
-
-		offset := r.URL.Query().Get("offset")
-		if offset != "99" {
-			t.Errorf("Expected 99, got: %s", offset)
-		}
-
-		testData, err = os.Open("test_data/test_communitys.json")
-		if err != nil {
-			t.Error("Could not find test data")
-			return
-		}
-
-		io.Copy(w, testData)
-	})
-
-	// Setup our test server
-	ts := httptest.NewServer(testHandler)
-	defer ts.Close()
-
-	testUrl, _ := url.Parse(ts.URL)
-
-	client := &http.Client{
-		Transport: RewriteTransport{
-			URL: testUrl,
-		},
+	f := func(r *http.Request) string {
+		return "test_data/test_communitys.json"
 	}
+	rCh := make(chan *http.Request, 1)
+	server, client := createTestServer(rCh, f)
+	defer server.Close()
+	defer close(rCh)
 
-	api := NewApi("dummyToken", client)
+	api := NewApi("dummyToken", &client)
 
 	r := Response{}
 
@@ -110,7 +115,7 @@ func TestGetNextPage(t *testing.T) {
 	}
 	nextLink := Link{
 		Rel:  []string{"next"},
-		Href: "test?limit=10&offset=99",
+		Href: "test?limit=10&offset=20",
 	}
 
 	r.Links = append(r.Links, selfLink)
@@ -118,44 +123,33 @@ func TestGetNextPage(t *testing.T) {
 
 	api.getNextPage(&r)
 
+	req := <-rCh
+	offset := req.URL.Query().Get("offset")
+	if offset != "20" {
+		t.Errorf("Expected 20, got: %s", offset)
+	}
+
+	nextLink.Href = "test?limit=10&offset=30"
+	r.Links[1] = nextLink
+	api.getNextPage(&r)
+	req = <-rCh
+	offset = req.URL.Query().Get("offset")
+	if offset != "30" {
+		t.Errorf("Expected 30, got: %s", offset)
+	}
+
 }
 
 func TestGetCommunities(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var testData io.Reader
-		var err error
-
-		offset := r.URL.Query().Get("offset")
-
-		if offset == "10" {
-			testData, err = os.Open("test_data/test_communities_empty.json")
-			if err != nil {
-				t.Error("Could not find test data")
-				return
-			}
-		} else {
-			testData, err = os.Open("test_data/test_communitys.json")
-			if err != nil {
-				t.Error("Could not find test data")
-				return
-			}
-		}
-
-		io.Copy(w, testData)
-	})
-
-	// Setup our test server
-	ts := httptest.NewServer(testHandler)
-	defer ts.Close()
-
-	testUrl, _ := url.Parse(ts.URL)
-
-	client := &http.Client{
-		Transport: RewriteTransport{
-			URL: testUrl,
-		},
+	f := func(r *http.Request) string {
+		return "test_data/test_communitys.json"
 	}
-	api := NewApi("dummyToken", client)
+	rCh := make(chan *http.Request, 1)
+	server, client := createTestServer(rCh, f)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 	resp, err := api.GetCommunitiesPage(0, 10)
 	if err != nil {
 		t.Error(err)
@@ -172,6 +166,28 @@ func TestGetCommunities(t *testing.T) {
 	if resp[2].Actions[0].Href != "community/25e1d7ad-40be-45b8-83b0-90d62447b865" {
 		t.Errorf("Expected \"community/25e1d7ad-40be-45b8-83b0-90d62447b865\" got %s", resp[2].Actions[0].Href)
 	}
+
+}
+
+func TestListCommunities(t *testing.T) {
+	p := func(r *http.Request) (fileName string) {
+		offset := r.URL.Query().Get("offset")
+
+		if offset == "10" {
+			fileName = "test_data/test_communities_empty.json"
+		} else {
+			fileName = "test_data/test_communitys.json"
+		}
+
+		return
+	}
+
+	rCh := make(chan *http.Request, 3)
+	server, client := createTestServer(rCh, p)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 
 	doneChan := make(chan bool)
 	communityChan, _ := api.ListCommunities(doneChan)
@@ -214,40 +230,16 @@ func TestGetCommunities(t *testing.T) {
 }
 
 func TestGetProjects(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var testData io.Reader
-		var err error
-
-		offset := r.URL.Query().Get("offset")
-		if offset == "10" {
-			testData, err = os.Open("test_data/test_projects_empty.json")
-			if err != nil {
-				t.Error("Could not find test data")
-				return
-			}
-		} else {
-			testData, err = os.Open("test_data/test_projects.json")
-			if err != nil {
-				t.Error("Could not find test data")
-				return
-			}
-		}
-
-		io.Copy(w, testData)
-	})
-
-	// Setup our test server
-	ts := httptest.NewServer(testHandler)
-	defer ts.Close()
-
-	testUrl, _ := url.Parse(ts.URL)
-
-	client := &http.Client{
-		Transport: RewriteTransport{
-			URL: testUrl,
-		},
+	p := func(r *http.Request) (fileName string) {
+		return "test_data/test_projects.json"
 	}
-	api := NewApi("dummyToken", client)
+
+	rCh := make(chan *http.Request, 1)
+	server, client := createTestServer(rCh, p)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 	resp, err := api.GetProjects("dummyCommunity")
 	if err != nil {
 		t.Error(err)
@@ -269,6 +261,27 @@ func TestGetProjects(t *testing.T) {
 	if resp[2].Property.CreationDate.Time != creationDate {
 		t.Errorf("Expected \"%s\", got %s", creationDate, resp[2].Property.CreationDate)
 	}
+}
+
+func TestListProjects(t *testing.T) {
+	p := func(r *http.Request) (fileName string) {
+		offset := r.URL.Query().Get("offset")
+
+		if offset == "10" {
+			fileName = "test_data/test_projects_empty.json"
+		} else {
+			fileName = "test_data/test_projects.json"
+		}
+
+		return
+	}
+
+	rCh := make(chan *http.Request, 3)
+	server, client := createTestServer(rCh, p)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 
 	community := Community{}
 	community.Property.Id = "dummycommunity"
@@ -308,41 +321,25 @@ func TestGetProjects(t *testing.T) {
 	}
 }
 
-func TestGetDocuments(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var testData io.Reader
-		var err error
-
+func TestListDocuments(t *testing.T) {
+	p := func(r *http.Request) (fileName string) {
 		offset := r.URL.Query().Get("offset")
+
 		if offset == "10" {
-			testData, err = os.Open("test_data/test_documents_empty.json")
-			if err != nil {
-				t.Error("Could not find test data")
-				return
-			}
+			fileName = "test_data/test_documents_empty.json"
 		} else {
-			testData, err = os.Open("test_data/test_documents.json")
-			if err != nil {
-				t.Error("Could not find test data")
-				return
-			}
+			fileName = "test_data/test_documents.json"
 		}
 
-		io.Copy(w, testData)
-	})
-
-	// Setup our test server
-	ts := httptest.NewServer(testHandler)
-	defer ts.Close()
-
-	testUrl, _ := url.Parse(ts.URL)
-
-	client := &http.Client{
-		Transport: RewriteTransport{
-			URL: testUrl,
-		},
+		return
 	}
-	api := NewApi("dummyToken", client)
+
+	rCh := make(chan *http.Request, 3)
+	server, client := createTestServer(rCh, p)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 	doneChan := make(chan bool)
 	documentChan, _ := api.ListDocuments(doneChan)
 
@@ -379,15 +376,16 @@ func TestGetDocuments(t *testing.T) {
 }
 
 func TestUploadString(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var testData io.Reader
-		var err error
-
+	p := func(r *http.Request) (fileName string) {
 		if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded;charset=utf-8" {
 			t.Error("Expected Content-Type x-www-form-urlencoded, got %s", r.Header.Get("Content-Type"))
 		}
 
-		err = r.ParseForm()
+		err := r.ParseForm()
+		if err != nil {
+			t.Error(err)
+		}
+
 		if r.Form.Get("locale_code") != "en-US" {
 			t.Errorf("Expected en-US, got %s", r.PostForm.Get("locale_code"))
 		}
@@ -396,27 +394,15 @@ func TestUploadString(t *testing.T) {
 			t.Errorf("Expected 12345, got %s", r.PostForm.Get("project_id"))
 		}
 
-		testData, err = os.Open("test_data/status.json")
-		if err != nil {
-			t.Error("Could not find test data")
-			return
-		}
-
-		io.Copy(w, testData)
-	})
-
-	// Setup our test server
-	ts := httptest.NewServer(testHandler)
-	defer ts.Close()
-
-	testUrl, _ := url.Parse(ts.URL)
-
-	client := &http.Client{
-		Transport: RewriteTransport{
-			URL: testUrl,
-		},
+		return "test_data/status.json"
 	}
-	api := NewApi("dummyToken", client)
+
+	rCh := make(chan *http.Request, 1)
+	server, client := createTestServer(rCh, p)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 	prop := ProjectProperty{}
 	prop.Id = "12345"
 	project := Project{}
@@ -436,42 +422,29 @@ func TestUploadString(t *testing.T) {
 }
 
 func TestAddTranslation(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var testData io.Reader
-		var err error
-
+	p := func(r *http.Request) (fileName string) {
 		if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded;charset=utf-8" {
 			t.Error("Expected Content-Type x-www-form-urlencoded, got %s", r.Header.Get("Content-Type"))
 		}
 
-		err = r.ParseForm()
+		err := r.ParseForm()
+		if err != nil {
+			t.Error(err)
+		}
 
 		if r.PostForm.Get("locale_code") != "es-ES" {
 			t.Errorf("Expected es-ES, got %s", r.PostForm.Get("locale_code"))
 		}
 
-		testData, err = os.Open("test_data/document_translate_post.json")
-		if err != nil {
-			t.Error("Could not find test data")
-			return
-		}
-
-		io.Copy(w, testData)
-	})
-
-	// Setup our test server
-	ts := httptest.NewServer(testHandler)
-	defer ts.Close()
-
-	testUrl, _ := url.Parse(ts.URL)
-
-	client := &http.Client{
-		Transport: RewriteTransport{
-			URL: testUrl,
-		},
+		return "test_data/document_translate_post.json"
 	}
 
-	api := NewApi("dummyToken", client)
+	rCh := make(chan *http.Request, 1)
+	server, client := createTestServer(rCh, p)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 	prop := DocumentProperty{}
 	document := Document{}
 	document.Property = prop
@@ -496,40 +469,24 @@ func TestAddTranslation(t *testing.T) {
 }
 
 func TestListTranslations(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var testData io.Reader
-		var err error
-
+	p := func(r *http.Request) (fileName string) {
 		offset := r.URL.Query().Get("offset")
+
 		if offset == "10" {
-			testData, err = os.Open("test_data/document_translate_get_empty.json")
-			if err != nil {
-				t.Error("Could not find test data")
-				return
-			}
+			fileName = "test_data/document_translate_get_empty.json"
 		} else {
-			testData, err = os.Open("test_data/document_translate_get.json")
-			if err != nil {
-				t.Error("Could not find test data")
-				return
-			}
+			fileName = "test_data/document_translate_get.json"
 		}
 
-		io.Copy(w, testData)
-	})
-
-	// Setup our test server
-	ts := httptest.NewServer(testHandler)
-	defer ts.Close()
-
-	testUrl, _ := url.Parse(ts.URL)
-
-	client := &http.Client{
-		Transport: RewriteTransport{
-			URL: testUrl,
-		},
+		return
 	}
-	api := NewApi("dummyToken", client)
+
+	rCh := make(chan *http.Request, 3)
+	server, client := createTestServer(rCh, p)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 	doneChan := make(chan bool)
 	prop := DocumentProperty{}
 	prop.Id = "12345"
@@ -549,31 +506,16 @@ func TestListTranslations(t *testing.T) {
 }
 
 func TestCheckStatus(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var testData io.Reader
-		var err error
-
-		testData, err = os.Open("test_data/document.json")
-		if err != nil {
-			t.Error("Could not find test data")
-			return
-		}
-
-		io.Copy(w, testData)
-	})
-
-	// Setup our test server
-	ts := httptest.NewServer(testHandler)
-	defer ts.Close()
-
-	testUrl, _ := url.Parse(ts.URL)
-
-	client := &http.Client{
-		Transport: RewriteTransport{
-			URL: testUrl,
-		},
+	p := func(r *http.Request) (fileName string) {
+		return "test_data/document.json"
 	}
-	api := NewApi("dummyToken", client)
+
+	rCh := make(chan *http.Request, 1)
+	server, client := createTestServer(rCh, p)
+	defer server.Close()
+	defer close(rCh)
+
+	api := NewApi("dummyToken", &client)
 	prop := DocumentProperty{}
 	prop.Id = "12345"
 	document := Document{}
