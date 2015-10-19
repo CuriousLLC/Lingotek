@@ -1,0 +1,186 @@
+{
+  "class": [
+    "documents",
+    "Collection"
+  ],
+  "properties": {
+    "limit": 10,
+    "offset": 10,
+    "total": 12,
+    "size": 2
+  },
+  "entities": [
+    {
+      "class": [
+        "document"
+      ],
+      "rel": [
+        "document"
+      ],
+      "properties": {
+        "project_id": "cdc27d80-ea98-4f56-81e6-a9514bf08a5d",
+        "upload_date": 1436918400000,
+        "external_url": null,
+        "title": "airsoft.txt",
+        "name": "airsoft.txt",
+        "id": "beca23f2-aca1-42b5-98a5-04833cf8a191",
+        "extension": "txt"
+      },
+      "entities": [
+        {
+          "class": [
+            "locale",
+            "en"
+          ],
+          "rel": [
+            "locale"
+          ],
+          "properties": {
+            "code": "en-US",
+            "language_code": "en",
+            "country_code": "US",
+            "title": "English, United States",
+            "language": "English",
+            "country": "United States"
+          },
+          "links": [
+            {
+              "rel": [
+                "self"
+              ],
+              "href": "/locale/en-US"
+            }
+          ]
+        },
+        {
+          "class": [
+            "status"
+          ],
+          "rel": [
+            "status"
+          ],
+          "properties": {
+            "title": "Status of airsoft.txt",
+            "progress": 0,
+            "id": "beca23f2-aca1-42b5-98a5-04833cf8a191",
+            "count": {
+              "segment": {
+                "total": 35,
+                "unique": 35
+              },
+              "word": {
+                "total": 991,
+                "unique": 991
+              },
+              "format_tag": {
+                "total": 2
+              },
+              "character": 5842
+            }
+          },
+          "links": [
+            {
+              "rel": [
+                "self"
+              ],
+              "href": "/document/beca23f2-aca1-42b5-98a5-04833cf8a191/status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class": [
+        "document"
+      ],
+      "rel": [
+        "document"
+      ],
+      "properties": {
+        "project_id": "4cd18caf-140f-48dd-a3c2-910754d34949",
+        "upload_date": 1436745600000,
+        "external_url": null,
+        "title": "page (node): One Ring",
+        "name": "page (node): One Ring.json",
+        "id": "67538667-09e8-495b-9dfb-9dfd105d80a0",
+        "extension": "json"
+      },
+      "entities": [
+        {
+          "class": [
+            "locale",
+            "en"
+          ],
+          "rel": [
+            "locale"
+          ],
+          "properties": {
+            "code": "en-US",
+            "language_code": "en",
+            "country_code": "US",
+            "title": "English, United States",
+            "language": "English",
+            "country": "United States"
+          },
+          "links": [
+            {
+              "rel": [
+                "self"
+              ],
+              "href": "/locale/en-US"
+            }
+          ]
+        },
+        {
+          "class": [
+            "status"
+          ],
+          "rel": [
+            "status"
+          ],
+          "properties": {
+            "title": "Status of page (node): One Ring",
+            "progress": 0,
+            "id": "67538667-09e8-495b-9dfb-9dfd105d80a0",
+            "count": {
+              "segment": {
+                "total": 11,
+                "unique": 7
+              },
+              "word": {
+                "total": 15,
+                "unique": 11
+              },
+              "format_tag": {
+                "total": 0
+              },
+              "character": 63
+            }
+          },
+          "links": [
+            {
+              "rel": [
+                "self"
+              ],
+              "href": "/document/67538667-09e8-495b-9dfb-9dfd105d80a0/status"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "/document?offset=0&limit=10"
+    },
+    {
+      "rel": [
+        "next"
+      ],
+      "href": "/document?offset=10&limit=10"
+    }
+  ]
+}

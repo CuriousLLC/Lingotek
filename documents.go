@@ -17,6 +17,7 @@ func (l *Lingotek) ListDocuments(doneChan <-chan bool) (<-chan Document, <-chan 
 		response := l.createDummyResponse("document", nil)
 
 		var documents []Document
+		var totalRead = int32(0)
 
 		for {
 			resp, err := l.getNextPage(response)
@@ -40,13 +41,17 @@ func (l *Lingotek) ListDocuments(doneChan <-chan bool) (<-chan Document, <-chan 
 			}
 
 			for i := 0; i < len(documents); i++ {
+				totalRead += 1
 				select {
 				case <-doneChan:
 					return
 				default:
 					resultChan <- documents[i]
 				}
+			}
 
+			if totalRead == response.Properties.Total {
+				return
 			}
 
 		}

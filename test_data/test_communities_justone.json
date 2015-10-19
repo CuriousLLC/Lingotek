@@ -1,0 +1,80 @@
+{
+  "class": [
+    "communities",
+    "Collection"
+  ],
+  "properties": {
+    "limit": 10,
+    "offset": 10,
+    "total": 11,
+    "size": 1
+  },
+  "entities": [
+    {
+      "class": [
+        "community"
+      ],
+      "rel": [
+        "community"
+      ],
+      "properties": {
+        "title": "1",
+        "id": "2a895174-6e7d-48c4-b34c-3d72bd0f3987"
+      },
+      "actions": [
+        {
+          "name": "modify",
+          "method": "PATCH",
+          "href": "community/2a895174-6e7d-48c4-b34c-3d72bd0f3987",
+          "title": "Modify Community",
+          "type": "application/x-www-form-urlencoded",
+          "fields": [
+            {
+              "name": "title",
+              "type": "TEXT",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "rel": [
+            "self"
+          ],
+          "href": "/community/2a895174-6e7d-48c4-b34c-3d72bd0f3987"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "name": "add",
+      "method": "POST",
+      "href": "community",
+      "title": "Add Community",
+      "type": "application/x-www-form-urlencoded",
+      "fields": [
+        {
+          "name": "title",
+          "type": "TEXT",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "community?offset=0&limit=10"
+    },
+    {
+      "rel": [
+        "next"
+      ],
+      "href": "community?offset=10&limit=10"
+    }
+  ]
+}

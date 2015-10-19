@@ -174,7 +174,7 @@ func TestListCommunities(t *testing.T) {
 		offset := r.URL.Query().Get("offset")
 
 		if offset == "10" {
-			fileName = "test_data/test_communities_empty.json"
+			fileName = "test_data/test_communities_justone.json"
 		} else {
 			fileName = "test_data/test_communitys.json"
 		}
@@ -197,8 +197,8 @@ func TestListCommunities(t *testing.T) {
 		cNum += 1
 	}
 
-	if cNum != 10 {
-		t.Errorf("Expected 10 communities, got %d", cNum)
+	if cNum != 11 {
+		t.Errorf("Expected 11 communities, got %d", cNum)
 	}
 
 	communityChan, errs := api.ListCommunities(doneChan)
@@ -268,7 +268,7 @@ func TestListProjects(t *testing.T) {
 		offset := r.URL.Query().Get("offset")
 
 		if offset == "10" {
-			fileName = "test_data/test_projects_empty.json"
+			fileName = "test_data/test_projects_three.json"
 		} else {
 			fileName = "test_data/test_projects.json"
 		}
@@ -294,8 +294,8 @@ func TestListProjects(t *testing.T) {
 		cNum += 1
 	}
 
-	if cNum != 10 {
-		t.Errorf("Expected 10 projects, got %d", cNum)
+	if cNum != 13 {
+		t.Errorf("Expected 13 projects, got %d", cNum)
 	}
 
 	projectChan, _ = api.ListProjects(&community, doneChan)
@@ -326,7 +326,7 @@ func TestListDocuments(t *testing.T) {
 		offset := r.URL.Query().Get("offset")
 
 		if offset == "10" {
-			fileName = "test_data/test_documents_empty.json"
+			fileName = "test_data/test_documents_two.json"
 		} else {
 			fileName = "test_data/test_documents.json"
 		}
@@ -348,8 +348,8 @@ func TestListDocuments(t *testing.T) {
 		cNum += 1
 	}
 
-	if cNum != 10 {
-		t.Errorf("Expected 10 projects, got %d", cNum)
+	if cNum != 12 {
+		t.Errorf("Expected 12 documents, got %d", cNum)
 	}
 
 	documentChan, _ = api.ListDocuments(doneChan)

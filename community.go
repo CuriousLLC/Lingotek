@@ -34,6 +34,7 @@ func (l *Lingotek) ListCommunities(doneChan <-chan bool) (<-chan Community, <-ch
 		response := l.createDummyResponse("community", nil)
 
 		var communities []Community
+		var totalRead = int32(0)
 
 		for {
 			resp, err := l.getNextPage(response)
@@ -57,12 +58,17 @@ func (l *Lingotek) ListCommunities(doneChan <-chan bool) (<-chan Community, <-ch
 			}
 
 			for i := 0; i < len(communities); i++ {
+				totalRead += 1
 				select {
 				case <-doneChan:
 					return
 				default:
 					resultChan <- communities[i]
 				}
+			}
+
+			if totalRead == response.Properties.Total {
+				return
 			}
 		}
 	}()

@@ -28,6 +28,7 @@ func (l *Lingotek) ListProjects(community *Community, doneChan <-chan bool) (<-c
 		response := l.createDummyResponse("project", &params)
 
 		var projects []Project
+		var totalRead = int32(0)
 
 		for {
 			resp, err := l.getNextPage(response)
@@ -51,13 +52,17 @@ func (l *Lingotek) ListProjects(community *Community, doneChan <-chan bool) (<-c
 			}
 
 			for i := 0; i < len(projects); i++ {
+				totalRead += 1
 				select {
 				case <-doneChan:
 					return
 				default:
 					resultChan <- projects[i]
 				}
+			}
 
+			if totalRead == response.Properties.Total {
+				return
 			}
 
 		}
