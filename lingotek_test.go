@@ -62,6 +62,7 @@ func createTestServer(requestChan chan *http.Request, getFileName func(*http.Req
 
 	return server, client
 }
+
 func TestResponseGetNext(t *testing.T) {
 	r := Response{}
 
